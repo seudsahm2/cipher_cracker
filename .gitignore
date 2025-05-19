@@ -1,1 +1,25 @@
-venv
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Django migrations (only ignore if solo or experimental)
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# SQLite database
+db.sqlite3
+
+# Environment variables
+.env
+
+# VS Code settings
+.vscode/
+
+# Virtual environments
+venv/
+env/
+
+# OS-specific
+.DS_Store
+Thumbs.db
