@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Caesar Cipher Cracker</title>
+</head>
+<body>
+    <h2>Caesar Cipher Frequency Attack Tool</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="ciphertext">Enter Ciphertext:</label><br>
+        <textarea name="ciphertext" rows="4" cols="60">{{ ciphertext }}</textarea><br><br>
+
+        <label for="top_n">How many top guesses?</label>
+        <input type="number" name="top_n" value="{{ top_n|default:10 }}"><br><br>
+
+        <button type="submit">Crack Cipher</button>
+    </form>
+
+    {% if results %}
+        <h3>Top {{ top_n }} Decryption Guesses:</h3>
+        <ol>
+            {% for score, key, plaintext in results %}
+                <li><strong>Key:</strong> {{ key }} | <strong>Score:</strong> {{ score }}<br>
+                <pre>{{ plaintext }}</pre></li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+</body>
+</html>
