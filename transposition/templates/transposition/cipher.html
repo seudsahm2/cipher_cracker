@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Transposition Cipher Tool</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            {{ form.text.label_tag }}
+            {{ form.text }}
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{ form.operation.label_tag }}
+                    {{ form.operation }}
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    {{ form.cipher_type.label_tag }}
+                    {{ form.cipher_type }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Fields -->
+        <div id="railfence-fields" class="cipher-fields">
+            <div class="form-group">
+                {{ form.rails.label_tag }}
+                {{ form.rails }}
+            </div>
+        </div>
+
+        <div id="columnar-fields" class="cipher-fields">
+            <div class="form-group">
+                {{ form.key.label_tag }}
+                {{ form.key }}
+            </div>
+        </div>
+
+        <div id="route-fields" class="cipher-fields">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form.rows.label_tag }}
+                        {{ form.rows }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form.cols.label_tag }}
+                        {{ form.cols }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="double-fields" class="cipher-fields">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form.key1.label_tag }}
+                        {{ form.key1 }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ form.key2.label_tag }}
+                        {{ form.key2 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="myszkowski-fields" class="cipher-fields">
+            <div class="form-group">
+                {{ form.key.label_tag }}
+                {{ form.key }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Process</button>
+    </form>
+
+    {% if result %}
+    <div class="result mt-4">
+        <h4>Result:</h4>
+        <div class="card">
+            <div class="card-body">
+                <pre>{{ result }}</pre>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.cipher-fields { display: none; }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cipherType = document.getElementById('id_cipher_type');
+    const operation = document.getElementById('id_operation');
+    
+    function updateFields() {
+        const type = cipherType.value;
+        document.querySelectorAll('.cipher-fields').forEach(field => field.style.display = 'none');
+        document.getElementById(`${type}-fields`).style.display = 'block';
+    }
+    
+    cipherType.addEventListener('change', updateFields);
+    updateFields(); // Initial update
+});
+</script>
+{% endblock %}
