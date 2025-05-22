@@ -1,84 +1,157 @@
-/* style.css */
+:root {
+    --cyber-cyan: #00f3ff;
+    --matrix-green: #0f0;
+    --hacker-red: #ff4655;
+    --deep-space: #0a0a1f;
+    --terminal-text: 'Courier New', monospace;
+}
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #2c3e50, #3498db);
-    color: #fff;
-    margin: 0;
-    padding: 0;
+    background: radial-gradient(circle at center, #0f172a, #020617);
+    color: #e2e8f0;
+    font-family: 'Segoe UI', system-ui;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 50px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    width: 150vw;
+    height: 150vh;
+    background-image: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="%2300f3ff22" fill="none" stroke-width="2"/></svg>');
+    animation: cipherSpin 120s linear infinite;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+@keyframes cipherSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 2rem 0;
+    text-shadow: 0 0 15px var(--cyber-cyan);
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    background: linear-gradient(90deg, transparent, #00f3ff33, transparent);
 }
 
 form {
-    background-color: #1c1c1c;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    width: 500px;
-    max-width: 90%;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
 }
 
-h2, h3 {
-    text-align: center;
-    color: #f1c40f;
-}
-
-label {
-    font-weight: bold;
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-}
-
-textarea,
-input[type="number"] {
+textarea, input[type="number"] {
     width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    margin-bottom: 20px;
-    resize: vertical;
-    font-size: 16px;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--cyber-cyan);
+    color: white;
+    font-family: var(--terminal-text);
+    transition: all 0.3s ease;
+    margin: 0.5rem 0;
+}
+
+textarea:focus, input[type="number"]:focus {
+    outline: none;
+    box-shadow: 0 0 15px var(--cyber-cyan);
 }
 
 button {
-    background-color: #f39c12;
-    color: #000;
+    background: linear-gradient(45deg, #00f3ff, #0066ff);
     border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 1rem 2rem;
+    color: white;
     font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 0.5rem;
     cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 1rem auto;
+    position: relative;
+    overflow: hidden;
 }
 
 button:hover {
-    background-color: #e67e22;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 242, 255, 0.4);
+}
+
+.results-section {
+    margin: 3rem auto;
+    max-width: 1000px;
+    display: grid;
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.decryption-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--cyber-cyan);
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.decryption-card:hover {
+    transform: translateY(-5px);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.decryption-card::before {
+    content: 'DECRYPTION KEY FOUND';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--hacker-red);
+    color: white;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    border-radius: 3px;
 }
 
 pre {
-    background-color: #2e2e2e;
-    padding: 15px;
-    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    border-left: 3px solid var(--matrix-green);
+    color: var(--matrix-green);
+    font-family: var(--terminal-text);
+    overflow-x: auto;
     white-space: pre-wrap;
-    font-family: 'Courier New', Courier, monospace;
-    color: #00ffcc;
+    word-wrap: break-word;
+    border-radius: 0 0.5rem 0.5rem 0;
 }
 
 ol {
-    background-color: #111;
-    padding: 20px;
-    border-radius: 10px;
-    list-style-position: inside;
+    counter-reset: decryption-counter;
+    list-style: none;
+    padding: 0;
 }
 
 li {
-    margin-bottom: 20px;
-    line-height: 1.6;
+    counter-increment: decryption-counter;
+    margin-bottom: 2rem;
+}
+
+li::before {
+    content: "0" counter(decryption-counter);
+    color: var(--cyber-cyan);
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 1rem;
 }
