@@ -1,31 +1,64 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Caesar Cipher Cracker</title>
-    <link rel="stylesheet" href="{% static 'caesar/style.css' %}">
-</head>
-<body>
-    <h2>Caesar Cipher Frequency Attack Tool</h2>
-    <form method="POST">
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Caesar Cipher</h2>
+    <form method="post">
         {% csrf_token %}
-        <label for="ciphertext">Enter Ciphertext:</label><br>
-        <textarea name="ciphertext" rows="4" cols="60">{{ ciphertext }}</textarea><br><br>
-
-        <label for="top_n">How many top guesses?</label>
-        <input type="number" name="top_n" value="{{ top_n|default:10 }}"><br><br>
-
-        <button type="submit">Crack Cipher</button>
+        
+        <div class="form-group">
+            <label>Text:</label>
+            <textarea name="text" class="form-control" rows="3">{{ text }}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Operation:</label>
+            <select name="operation" class="form-control">
+                <option value="encrypt" {% if operation == 'encrypt' %}selected{% endif %}>Encrypt</option>
+                <option value="decrypt" {% if operation == 'decrypt' %}selected{% endif %}>Decrypt</option>
+                <option value="frequency_attack" {% if operation == 'frequency_attack' %}selected{% endif %}>Frequency Attack</option>
+            </select>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Key:</label>
+                    <input type="number" name="key" value="{{ key|default:'3' }}" class="form-control" min="0" max="25">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Top Results (for frequency attack):</label>
+                    <input type="number" name="top_n" value="{{ top_n|default:'10' }}" class="form-control" min="1" max="26">
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Process</button>
     </form>
 
-    {% if results %}
-        <h3>Top {{ top_n }} Decryption Guesses:</h3>
-        <ol>
-            {% for score, key, plaintext in results %}
-                <li><strong>Key:</strong> {{ key }} | <strong>Score:</strong> {{ score }}<br>
-                <pre>{{ plaintext }}</pre></li>
-            {% endfor %}
-        </ol>
+    {% if result %}
+    <div class="mt-4">
+        <h4>Result:</h4>
+        <div class="card">
+            <div class="card-body">
+                <pre>{{ result }}</pre>
+            </div>
+        </div>
+    </div>
     {% endif %}
-</body>
-</html>
+    
+    {% if possible_plaintexts %}
+    <div class="mt-4">
+        <h4>Possible Plaintexts:</h4>
+        <div class="list-group">
+            {% for key, text in possible_plaintexts %}
+            <div class="list-group-item">
+                <strong>Key {{ key }}:</strong> {{ text }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

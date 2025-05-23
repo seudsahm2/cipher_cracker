@@ -1,0 +1,264 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cipher Cracker</title>
+    <style>
+        :root {
+            --cyber-cyan: #00f3ff;
+            --matrix-green: #0f0;
+            --hacker-red: #ff4655;
+            --deep-space: #0a0a1f;
+            --terminal-text: 'Courier New', monospace;
+        }
+
+                /* Add navigation styles */
+        .cyber-nav {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--cyber-cyan);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--cyber-cyan);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--matrix-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            text-shadow: 0 0 15px var(--cyber-cyan);
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green);
+            font-family: var(--terminal-text);
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0f172a, #020617);
+            color: #e2e8f0;
+            font-family: 'Segoe UI', system-ui;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 20px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            width: 150vw;
+            height: 150vh;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="%2300f3ff22" fill="none" stroke-width="2"/></svg>');
+            animation: cipherSpin 120s linear infinite;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes cipherSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            text-shadow: 0 0 15px var(--cyber-cyan);
+            position: relative;
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            background: linear-gradient(90deg, transparent, #00f3ff33, transparent);
+        }
+
+        form {
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--cyber-cyan);
+        }
+
+        textarea, input, select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--cyber-cyan);
+            color: white;
+            font-family: var(--terminal-text);
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--cyber-cyan);
+        }
+
+        button {
+            background: linear-gradient(45deg, #00f3ff, #0066ff);
+            border: none;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 1rem auto;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.4);
+        }
+
+        .result-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--cyber-cyan);
+            border-radius: 0.8rem;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            border-left: 3px solid var(--matrix-green);
+            color: var(--matrix-green);
+            font-family: var(--terminal-text);
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .list-group {
+            border: 1px solid var(--cyber-cyan);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .list-group-item {
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--cyber-cyan);
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-group-item strong {
+            color: var(--cyber-cyan);
+        }
+
+        select {
+            background: rgba(0, 0, 0, 0.7) !important;
+            color: var(--cyber-cyan) !important;
+            border: 1px solid var(--cyber-cyan) !important;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f3ff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1em;
+        }
+
+        select option {
+            background: #020617;
+            color: var(--cyber-cyan);
+            padding: 0.5rem;
+        }
+
+        select option:hover {
+            background: var(--cyber-cyan) !important;
+            color: #020617 !important;
+        }
+
+        select:focus {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <nav class="cyber-nav">
+        <div class="nav-container">
+            <div class="brand">CIPHER_CRACKER</div>
+            <div class="nav-links">
+                <a href="{% url 'caesar:home' %}" class="nav-link {% if request.resolver_match.app_name == 'caesar' %}active{% endif %}">CAESAR</a>
+                <a href="{% url 'transposition:transposition' %}" class="nav-link {% if request.resolver_match.app_name == 'transposition' %}active{% endif %}">TRANSPOSITION</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
